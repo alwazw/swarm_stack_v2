@@ -1,0 +1,67 @@
+🚨 Critical Issues and Immediate Cleanup Plan
+
+⚠️ Known Issues Requiring Immediate Action
+
+Critical Issues Identified
+
+Port Conflicts: Some services (e.g., former Organizr 443 binding) are incorrectly binding to forbidden host ports ($80/443$).
+
+Inconsistent Naming: Test containers (alertmanager_test) and orphaned containers are still running.
+
+Network Complexity: $14$ active networks suggest over-segmentation and management overhead.
+
+Security Concerns
+
+Missing SSL: No automatic HTTPS implementation is currently in place.
+
+Plaintext Credentials: Some credentials stored in plaintext (violates recommended README.md principles).
+
+Secret Permissions: Some secret files have weak permissions ($664$).
+
+Direct Port Access: Services are accessible directly via IP/Port without a reverse proxy or SSO layer.
+
+Performance Issues (Contributing to High Load)
+
+High Load: System load consistently averaging $2.0 - 2.5$ (concerning).
+
+Memory Waste: Multiple Grafana instances consuming $2.2\text{GB}$ total.
+
+Excessive Redundancy: $5$ dashboard services are running (Heimdall, Homarr, Homepage, Organizr, Homar) with overlapping functionality.
+
+Zombie Processes: $12-13$ zombie processes detected.
+
+🗑️ Cleanup Strategy: Removing Rogue Projects
+
+The analysis identified containers running from old, archived Docker Compose files, leading to resource waste and conflicts.
+
+Rogue Docker Compose Files Found (Partial List):
+
+/home/alwazw/docker/manus/alwazw_swarm/docker-compose-final.yml
+
+/home/alwazw/docker/manus/alwazw_swarm/docker-compose-complete.yml
+
+/home/alwazw/docker/alwazw_swarm_fixedbymanus_1/docker-compose.yml
+
+/home/alwazw/docker/archive/...
+
+/home/alwazw/docker/activepieces/...
+
+Current Docker Compose Projects to Be Cleaned:
+
+full_stack: running($7$) - LEGACY PROJECT
+
+delete: running($1$) - TEMPORARY (cloudflared_temp_delete)
+
+activepieces: running(X) - LEGACY PROJECT
+
+Cleanup Strategy Required (Step-by-Step):
+
+Backup All Compose Files before deletion.
+
+Stop Containers from legacy projects (full_stack, activepieces).
+
+Remove Compose Files from /home/alwazw/docker/manus/ directory.
+
+Clean Archive Directories that contain old compose files.
+
+Keep delete directory temporarily for cloudflared_temp_delete access.
