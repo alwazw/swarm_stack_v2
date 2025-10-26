@@ -1,0 +1,25 @@
+/alwazw_swarm/
+├── .env                 # Global environment variables (e.g., HOST_IP, TIMEZONE)
+├── secrets/
+│   ├── password.txt     # Centralized, standardized password (WaficWazzan!2)
+│   ├── postgres_pw.txt  # Dedicated database credentials
+│   └── npm_key.txt      # Nginx Proxy Manager key
+├── stacks/
+│   ├── 00_infrastructure.yml  # Essential networking, proxy, security (e.g., NPM, Watchtower, UFW rules)
+│   ├── 10_management.yml      # Portainer, Dozzle, Health Checks (Uptime Kuma, cAdvisor)
+│   ├── 20_database.yml        # PostgreSQL, MariaDB, Redis, pgAdmin, Adminer
+│   ├── 30_media.yml           # Plex, Jellyfin, Emby, Overseerr, Radarr, Sonarr, Prowlarr, qBittorrent
+│   ├── 40_automation.yml      # N8N, Home Assistant, Gotify, Apprise
+│   ├── 50_dashboards.yml      # Heimdall, Homepage (Consider consolidating down to 1-2 services)
+│   ├── 60_monitoring.yml      # Grafana, Prometheus, AlertManager (Metrics/Alerting core)
+│   ├── 70_security.yml        # Vaultwarden, Wazuh Security Platform
+│   ├── 80_backup.yml          # Kopia, Duplicati, Restic (Backup service isolation)
+│   └── 90_business.yml        # Inventree, ERP/CRM systems (New Pro Category)
+├── compose.yml          # MAIN ENTRY POINT: Uses 'include' or 'extension' to pull in all stacks/*.yml files
+└── volumes/             # (Not a directory, but a logical grouping for persistent storage)
+├── media/
+│   ├── pictures
+│   ├── videos
+│   └── music
+└── configs/
+└── nextcloud_config
